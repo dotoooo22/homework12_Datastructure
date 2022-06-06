@@ -236,3 +236,68 @@ int bubbleSort(int *a)
 
 	return 0;
 }
+
+int shellSort(int *a)
+{
+	int i, j, k, h, v;
+
+	printf("Shell Sort: \n");
+	printf("----------------------------------------------------------------\n");
+
+	printArray(a);
+
+	for (h = MAX_ARRAY_SIZE/2; h > 0; h /= 2)		//h간격으로 비교해서 정렬
+	{
+		for (i = 0; i < h; i++)
+		{
+			for(j = i + h; j < MAX_ARRAY_SIZE; j += h)
+			{
+				v = a[j];
+				k = j;
+				while (k > h-1 && a[k-h] > v)
+				{
+					a[k] = a[k-h];
+					k -= h;
+				}
+				a[k] = v;
+			}
+		}
+	}
+	printf("----------------------------------------------------------------\n");
+	printArray(a);
+
+	return 0;
+}
+
+int quickSort(int *a, int n)
+{
+	int v, t;
+	int i, j;
+
+	if (n > 1)
+	{
+		v = a[n-1];		//피봇
+		i = -1;
+		j = n - 1;
+
+		while(1)
+		{
+			while(a[++i] < v);		//피봇보다 작은거찾기
+			while(a[--j] > v);		//피봇보다 큰거찾기
+
+			if (i >= j) break;		//왼쪽 오른쪽 위치 바꾸기
+			t = a[i];
+			a[i] = a[j];
+			a[j] = t;
+		}
+		t = a[i];
+		a[i] = a[n-1];
+		a[n-1] = t;
+
+		quickSort(a, i);
+		quickSort(a+i+1, n-i-1);
+	}
+
+
+	return 0;
+}
